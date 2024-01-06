@@ -107,7 +107,23 @@ test_db_storage.py'])
             self.assertIsNot(func[1].__doc__, None,
                              "{:s} method needs a docstring".format(func[0]))
             self.assertTrue(len(func[1].__doc__) >= 1,
+<<<<<<< HEAD
                             "{:s} method needs a docstring".format(func[0]))
+=======
+                            "{:s} method ineeds a docstring".format(func[0]))
+
+    def test_count_objects(self):
+        """tests for method count objects, ie, tables"""
+        self.assertEqual(models.storage.count(), 7)
+
+    def test_creating_new_state(self):
+        """tests for method count"""
+        previous_states = models.storage.count(State)
+        models.storage.new(State(name='California'))
+        models.storage.new(State(name='Ohio'))
+        new_states = models.storage.count(State)
+        self.assertLess(previous_states, new_states)
+>>>>>>> master
 
 
 class TestFileStorage(unittest.TestCase):
