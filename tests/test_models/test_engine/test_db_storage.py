@@ -81,54 +81,6 @@ test_db_storage.py'])
         self.assertLess(previous_states, new_states)
 
 
-'''
-    def test_count_after_deleting(self):
-        """test for count number after deleting"""
-        before_deleting = models.storage.count(State)
-        models.storage.delete('Miami', "45sd-5544s-ss45")
-        after_deleting = models.storage.count(State)
-        self.assertless(after_deleting, before_deleting)
-
-    @patch('models.storage.DBStorage.__session')
-    def test_get_found_obj(self, mock_session):
-        """method that tests if get method retrieves one object
-        and the object exists"""
-        mock_query = mock_session.query.return_value
-        mock_query.first.return_value = State(id="234", name='Ohio')
-
-        storage = DBStorage()
-        state = storage.get(State, "234")
-
-        # Assertions
-        self.assertEqual(state.id, '234')
-        self.assertEqual(state.name, 'Ohio')
-        mock_query.assert_called_once_with(State)
-        mock_query.filter.assert_called_once_with(State.id == '234')
-
-
-
-    @patch('storage.DBStorage.__session')
-    def test_get_notfound_obj(self, mock_session):
-        """test when the object is not found"""
-        mock_query = mock_session.query.return_value.filter.return_value
-        mock_query.first.return_value = None
-
-        storage = DBStorage()
-        state = storage.get(State, '567')
-
-        # Assertions
-        self.assertIsNone(state)
-        mock_session.query.assert_called_once_with(State)
-        mock_session.filter.assert_called_once_with(State.id == '567')
-        mock_query.first.assert_called_once()
-
-#    def test_get_method(self):
-#        """tests the get method returns the required value"""
-#        self.assertEqual(DBStorage.get(User, "1234"), self.user1)
-#        self.assertIsNone(DBStorage.get(User, "5789"))
-'''
-
-
 class TestFileStorage(unittest.TestCase):
     """Test the FileStorage class"""
     @unittest.skipIf(models.storage_t != 'db', "not testing db storage")
