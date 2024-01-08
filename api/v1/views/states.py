@@ -26,7 +26,8 @@ def return_states():
     return jsonify(states_list)
 
 
-@state_views.route("/states/<state_id>", strict_slashes=False, methods=["GET", "DELETE"])
+@state_views.route("/states/<state_id>", strict_slashes=False,
+                   methods=["GET", "DELETE"])
 def return_state(state_id):
     """Returns state based on state_id"""
     if request.method == "GET":
