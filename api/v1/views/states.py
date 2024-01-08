@@ -65,15 +65,15 @@ def post_state():
 @state_views.route("/states/<state_id>", methods=["PUT"])
 def update_state(state_id):
     """updates data on a state"""
-    all_states = storage.get(State, state_id)
-    if not all_states:
-        abort(404)
-    if not request.get_json():
-        abort(400, description="Not a JSON")
-    ignore = ['id', 'creates_at', 'updated_at']
-    data = request.get_json()
-    for key, value in data.items():
-        if key not in ignore:
-            setattr(state, key, value)
-    storage.save()
-    return make_response(jsonify(state.to_dict()), 200)
+    if request.method == "PUT":
+        all_states = storage.get(State, state_id)
+        if not all_states:
+            abort(404)
+        if not request.get_json():
+            abort(400, description="Not a JSON")
+        data = request.get_json()
+        for key, value in data.items():
+            if key not in ["id", "created_at", "updated_at"]:
+                setattr(all_states, key, value)
+        storage.save()
+        return jsonify(all_states.to_dict()), 200
