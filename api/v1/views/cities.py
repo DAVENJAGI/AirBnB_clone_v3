@@ -49,7 +49,7 @@ def return_city(city_id):
 @city_views.route("/cities/city_id>", methods=["DELETE"])
 def delete_city(city_id):
     """deletes city"""
-    elif request.method == "DELETE":
+    if request.method == "DELETE":
         city = storage.get(City, city_id)
         if city is None:
             abort(404)
