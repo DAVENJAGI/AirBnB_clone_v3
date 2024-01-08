@@ -43,6 +43,7 @@ def return_state(state_id):
         storage.delete(all_states)
         return jsonify(all_states.to_dict()), 200
 
+    """
     elif request.method == "POST":
         if not request.get_json():
             abort(400, description="Not a JSON")
@@ -70,3 +71,4 @@ def return_state(state_id):
                 setattr(state, key, value)
         storage.save()
         return make_response(jsonify(state.to_dict()), 200)
+"""
