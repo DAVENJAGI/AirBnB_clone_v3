@@ -38,7 +38,7 @@ def return_state(state_id):
 
     elif request.method == "DELETE":
         all_states = storage.get(State, state_id)
-        if all_states is None:
+        if not all_states:
             abort(404)
         storage.delete(all_states)
         return jsonify({}), 200
