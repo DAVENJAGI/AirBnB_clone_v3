@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#!/usr/bin/python3
 """import city_views and creates a route"""
 
 from flask import jsonify, Blueprint, abort, request
@@ -12,8 +12,6 @@ from models.review import Review
 from models.state import State
 from models.user import User
 import json
-
-# state_views = Blueprint("states", __name__)
 
 
 @city_views.route("/cities", strict_slashes=False, methods=["GET"])
