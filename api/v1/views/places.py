@@ -15,6 +15,7 @@ from models.user import User
 @app_views.route('/cities/<city_id>/places', methods=['POST', 'GET'],
                  strict_slashes=False)
 def city_places_methods(city_id):
+    """API endpoint to get data about city_palces_methods"""
     city = storage.get(City, city_id)
     if city is None:
         abort(404)

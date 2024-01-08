@@ -14,6 +14,7 @@ from models import storage
 @app_views.route('/states/<state_id>/cities', methods=['POST', 'GET'],
                  strict_slashes=False)
 def get_city(state_id):
+    """API get cities data"""
 
     state = storage.get(State, state_id)
     if state is None:
