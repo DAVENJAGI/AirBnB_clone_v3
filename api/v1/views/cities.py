@@ -58,17 +58,22 @@ def return_city(city_id):
 
 @city_views.route("/states/<state_id>/cities/", strict_slashes=False,
                   methods=["POST"])
-def post_city():
+def post_city(state_id):
     """posts a new state"""
     if request.method == "POST":
         if not request.get_json():
             abort(400, description="Not a JSON")
         if 'name' not in request.get_json():
             abort(400, description="Missing name")
-        city_name = request.get_json()
-        instance = City(**city_name)
-        instance.save()
-        return jsonify(instance.to_dict()), 201
+
+        state = storage.get(State, state_id)
+        if not state:
+            abort(404)
+
+        city_data = request.get_json()
+        new_city = City(**city_data, state_id=state_id)
+        new_city.save()
+        return jsonify(new_city.to_dict()), 201
 
 
 @city_views.route("/cities/<city_id>", methods=["PUT"])
