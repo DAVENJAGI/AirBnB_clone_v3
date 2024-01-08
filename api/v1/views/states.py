@@ -16,18 +16,18 @@ import json
 # state_views = Blueprint("states", __name__)
 
 
-@state_views.route("/states", strict_slashes=False, methods=["GET"])
+@state_views.route("/states", strict_slashes=False)
 def return_states():
     """returns all state objects"""
-    all_states = storage.all(State).values()
-    states_list = []
-    for state in all_states:
-        states_list.append(state.to_dict())
-    return jsonify(states_list)
+    if request.method == "GET":
+        all_states = storage.all(State).values()
+        states_list = []
+        for state in all_states:
+            states_list.append(state.to_dict())
+        return jsonify(states_list)
 
 
-@state_views.route("/states/<state_id>", strict_slashes=False,
-                   methods=["GET", "DELETE"])
+@state_views.route("/states/<state_id>", strict_slashes=False)
 def return_state(state_id):
     """Returns state based on state_id"""
     if request.method == "GET":
@@ -41,34 +41,4 @@ def return_state(state_id):
         if all_states is None:
             abort(404)
         storage.delete(all_states)
-        return jsonify(all_states.to_dict()), 200
-
-    """
-    elif request.method == "POST":
-        if not request.get_json():
-            abort(400, description="Not a JSON")
-
-        if 'name' not in request.get_json():
-            abort(400, description="Missing name")
-
-        state_name = request.get_json()
-        instance = State(**state_name)
-        instance.save()
-        return jsonify(instance.to_dict()), 201
-
-    else:
-        all_states = storage.get(State, state_id)
-        if not all_states:
-            abort(404)
-        if not request.get_json():
-            abort(400, description="Not a JSON")
-
-        ignore = ['id', 'creates_at', 'updated_at']
-
-        data = request.get_json()
-        for key, value in data.items():
-            if key not in ignore:
-                setattr(state, key, value)
-        storage.save()
-        return make_response(jsonify(state.to_dict()), 200)
-"""
+        return jsonify({}), 200
