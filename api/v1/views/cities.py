@@ -15,7 +15,7 @@ import json
 
 
 @city_views.route("/cities", strict_slashes=False, methods=["GET"])
-def return_states():
+def return_cities():
     """returns all state objects"""
     all_cities = storage.all(City).values()
     cities_list = []
@@ -25,7 +25,7 @@ def return_states():
 
 
 @city_views.route("/states/<state_id>/cities", strict_slashes=False)
-def return_by_state(state_id):
+def return_by_city_id(state_id):
     """returns city based on state_id"""
     if request.method == "GET":
         state = storage.get(State, state_id)
@@ -37,7 +37,7 @@ def return_by_state(state_id):
 
 
 @city_views.route("/cities/<city_id>", strict_slashes=False, methods=["GET"])
-def return_state(city_id):
+def return_city(city_id):
     """Returns state based on city_id"""
     if request.method == "GET":
         all_cities = storage.get(City, city_id)
@@ -60,7 +60,7 @@ def delete_city(city_id):
 
 @city_views.route("/states/<state_id>/cities/", strict_slashes=False,
                   methods=["POST"])
-def post_state():
+def post_city():
     """posts a new state"""
     if request.method == "POST":
         if not request.get_json():
@@ -74,7 +74,7 @@ def post_state():
 
 
 @city_views.route("/cities/<city_id>", methods=["PUT"])
-def update_state(city_id):
+def update_city(city_id):
     """updates data on a city"""
     if request.method == "PUT":
         all_cities = storage.get(City, city_id)
