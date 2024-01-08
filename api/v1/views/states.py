@@ -27,7 +27,11 @@ def return_states():
         return jsonify(states_list)
 
 
+<<<<<<< HEAD
 @state_views.route("/states/<state_id>", strict_slashes=False)
+=======
+@state_views.route("/states/<state_id>", strict_slashes=False, methods=["GET", "DELETE"])
+>>>>>>> parent of 27a09a7 (state_delete_update)
 def return_state(state_id):
     """Returns state based on state_id"""
     if request.method == "GET":
