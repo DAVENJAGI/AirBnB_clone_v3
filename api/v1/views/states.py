@@ -35,12 +35,17 @@ def return_state(state_id):
             abort(404)
         return jsonify(all_states.to_dict())
 
-    elif request.method == "DELETE":
-        all_states = storage.get(State, state_id)
-        if all_states is none:
+
+@state_views.route("/states/<state_id>", methods=["DELETE"])
+def delete_state(state_id):
+    """deletes state"""
+    if request.method == "DELETE":
+        state = storage.get(State, state_id)
+        if state is None:
             abort(404)
-        storage.delete(all_states)
-        return jsonify(all_states.to_dict()), 200
+        storage.delete(state)
+        storage.save()
+        return jsonify({}), 200
 
 
 @state_views.route("/states/", strict_slashes=False, methods=["POST"])
