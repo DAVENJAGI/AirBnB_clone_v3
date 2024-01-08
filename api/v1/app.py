@@ -2,7 +2,7 @@
 """creates a variable app, instance of flask, and tears down"""
 
 from flask import Flask
-from api.v1.views import app_views
+from api.v1.views import app_views, state_views 
 from models import storage
 import os
 from flask import jsonify
@@ -10,7 +10,7 @@ from flask import jsonify
 app = Flask(__name__)
 
 app.register_blueprint(app_views)
-
+app.register_blueprint(state_views)
 
 @app.teardown_appcontext
 def teardown(exception=None):
