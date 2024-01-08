@@ -16,7 +16,6 @@ import json
 # state_views = Blueprint("states", __name__)
 
 
-
 @state_views.route("/states", strict_slashes=False, methods=["GET"])
 def return_states():
     """returns all state objects"""
@@ -26,6 +25,7 @@ def return_states():
         states_list.append(state.to_dict())
     return jsonify(states_list)
 
+
 @state_views.route("/states/<state_id>", strict_slashes=False)
 def return_state(state_id):
     """Returns state based on state_id"""
@@ -34,7 +34,7 @@ def return_state(state_id):
         if not all_states:
             abort(404)
         return jsonify(all_states.to_dict())
-    
+
     elif request.method == "DELETE":
         all_states = storage.get(State, state_id)
         if all_states is none:
