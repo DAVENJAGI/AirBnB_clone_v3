@@ -13,7 +13,8 @@ from models.state import State
 from models.user import User
 import json
 
-#state_views = Blueprint("states", __name__)
+# state_views = Blueprint("states", __name__)
+
 
 @state_views.route("/states", strict_slashes=False)
 def return_states():
