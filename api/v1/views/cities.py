@@ -36,7 +36,8 @@ def return_by_city_id(state_id):
         return jsonify(cities_data)
 
 
-@city_views.route("/cities/<city_id>", strict_slashes=False, methods=["GET"])
+@city_views.route("/cities/<city_id>", strict_slashes=False,
+                  methods=["GET", "DELETE"])
 def return_city(city_id):
     """Returns state based on city_id"""
     if request.method == "GET":
@@ -45,14 +46,11 @@ def return_city(city_id):
             abort(404)
         return jsonify(all_cities.to_dict())
 
-
-@city_views.route("/cities/city_id>", methods=["DELETE"])
-def delete_city(city_id):
-    """deletes city"""
-    if request.method == "DELETE":
+    elif request.method == "DELETE":
         city = storage.get(City, city_id)
         if city is None:
             abort(404)
+
         storage.delete(city)
         storage.save()
         return jsonify({}), 200
