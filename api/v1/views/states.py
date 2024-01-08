@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 """imports app_views and creates a route /status"""
 
-from flask import jsonify, Blueprint, abort
+from flask import jsonify, Blueprint, abort, request
 from api.v1.views import state_views
 from models import storage
 from models.base_model import BaseModel
@@ -16,7 +16,7 @@ import json
 # state_views = Blueprint("states", __name__)
 
 
-@state_views.route("/states", strict_slashes=False)
+@state_views.route("/states", strict_slashes=False, methods=["GET"])
 def return_states():
     """returns all state objects"""
     all_states = storage.all(State).values()
@@ -26,26 +26,24 @@ def return_states():
     return jsonify(states_list)
 
 
-@state_views.route("/states/<state_id>", strict_slashes=False)
+@state_views.route("/states/<state_id>", strict_slashes=False, methods=["GET", "DELETE"])
 def return_state(state_id):
     """Returns state based on state_id"""
-    all_states = storage.get(State, state_id)
-    if not all_states:
-        abort(404)
-    return jsonify(all_states.to_dict())
+    if request.method == "GET":
+        all_states = storage.get(State, state_id)
+        if not all_states:
+            abort(404)
+        return jsonify(all_states.to_dict())
+
+    elif request.method == "DELETE":
+        all_states = storage.get(State, state_id)
+        if all_states is None:
+            abort(404)
+        storage.delete(all_states)
+        return jsonify(all_states.to_dict()), 200
 
 
-@state_views.route("/states/<state_id>")
-def delete_state(state_id, method=['DELETE']):
-    """deletes state based on the HTTP method delete"""
-    all_states = storage.get(State, state_id)
-    if not all_states:
-        abort(404)
-    storage.delete(all_states)
-    return make_response(jsonify({}), 200)
-
-
-@state_views.route("/states/", strict_slashes=False)
+@state_views.route("/states/", strict_slashes=False, methods=["POST"])
 def post_state():
     """posts a new state"""
     if not request.get_json():
@@ -60,7 +58,7 @@ def post_state():
     return make_response(jsonify(instance.to_dict()), 201)
 
 
-@state_views.route("/states/<state_id>")
+@state_views.route("/states/<state_id>", methods=["PUT"])
 def update_state(state_id):
     """updates data on a state"""
     all_states = storage.get(State, state_id)
