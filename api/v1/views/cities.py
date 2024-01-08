@@ -1,4 +1,4 @@
-#!/usr/bin/python3
+#!/usr/bin/python
 """import city_views and creates a route"""
 
 from flask import jsonify, Blueprint, abort, request
@@ -26,8 +26,7 @@ def return_states():
     return jsonify(cities_list)
 
 
-@city_views.route("/states/<state_id>/cities", strict_slashes=False,
-                  methods=["GET"])
+@city_views.route("/states/<state_id>/cities", strict_slashes=False)
 def return_by_state(state_id):
     """returns city based on state_id"""
     if request.method == "GET":
