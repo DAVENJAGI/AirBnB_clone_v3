@@ -6,5 +6,12 @@ from flask import Blueprint
 
 app_views = Blueprint("app_views", __name__, url_prefix="/api/v1")
 state_views = Blueprint("state_views", __name__, url_prefix="/api/v1")
-from api.v1.views.index import *
-from api.v1.views.states import *
+city_views = Blueprint("city_views", __name__, url_prefix="/api/v1")
+amenity_views = Blueprint("amenity_views", __name__, url_prefix="/api/v1")
+user_views = Blueprint("user_views", __name__, url_prefix="/api/v1")
+
+from views.index import *
+from views.states import *
+from views.cities import *
+from views.amenities import *
+from views.users import *
