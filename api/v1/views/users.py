@@ -1,4 +1,4 @@
-#!/usr/bin/python3
+#!/usr/bin/python
 """import city_views and creates a route"""
 
 from flask import jsonify, Blueprint, abort, request
