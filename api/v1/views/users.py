@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#!/usr/bin/python3
 """import city_views and creates a route"""
 
 from flask import jsonify, Blueprint, abort, request
@@ -25,7 +25,7 @@ def return_users():
 
 
 @user_views.route("/users/<user_id>", strict_slashes=False,
-                     methods=["GET", "DELETE"])
+                  methods=["GET", "DELETE"])
 def return_user_by_id(user_id):
     """Returns state based on city_id"""
     if request.method == "GET":
@@ -45,8 +45,8 @@ def return_user_by_id(user_id):
 
 
 @user_views.route("/users", strict_slashes=False,
-                     methods=["POST"])
-def post_amenity():
+                  methods=["POST"])
+def post_user():
     """posts a new state"""
     if request.method == "POST":
         if not request.get_json():
@@ -63,7 +63,7 @@ def post_amenity():
 
 
 @user_views.route("/users/<user_id>", methods=["PUT"])
-def update_city(user_id):
+def update_user(user_id):
     """updates data on a city"""
     if request.method == "PUT":
         all_users = storage.get(User, user_id)
