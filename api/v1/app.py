@@ -2,7 +2,7 @@
 """creates a variable app, instance of flask, and tears down"""
 
 from flask import Flask
-from api.v1.views import app_views, state_views, city_views
+from views import app_views, state_views, city_views
 from api.v1.views import amenity_views, user_views
 from models import storage
 import os
@@ -10,6 +10,8 @@ from flask import jsonify
 
 app = Flask(__name__)
 
+
+"""registration of bueprints"""
 app.register_blueprint(app_views)
 app.register_blueprint(state_views)
 app.register_blueprint(city_views)

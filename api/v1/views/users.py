@@ -2,7 +2,7 @@
 """import city_views and creates a route"""
 
 from flask import jsonify, Blueprint, abort, request
-from api.v1.views import user_views
+from api.v1.views import app_views, user_views
 from models import storage
 from models.base_model import BaseModel
 from models.amenity import Amenity
