@@ -24,7 +24,7 @@ def return_amenities():
     return jsonify(amenities_list)
 
 
-@amenity_views.route("/cities/<city_id>", strict_slashes=False,
+@amenity_views.route("/amenities/<amenity_id>", strict_slashes=False,
                      methods=["GET", "DELETE"])
 def return_amenity_by_id(amenity_id):
     """Returns state based on city_id"""
@@ -39,14 +39,14 @@ def return_amenity_by_id(amenity_id):
         if amenity is None:
             abort(404)
 
-        storage.delete(city)
+        storage.delete(amenity)
         storage.save()
         return jsonify({}), 200
 
 
 @amenity_views.route("/amenities", strict_slashes=False,
                      methods=["POST"])
-def post_city(state_id):
+def post_amenity():
     """posts a new state"""
     if request.method == "POST":
         if not request.get_json():
@@ -55,13 +55,13 @@ def post_city(state_id):
             abort(400, description="Missing name")
 
         amenity_data = request.get_json()
-        new_amenity = Amenity(**amenity_data, amenity_id=amenity_id)
+        new_amenity = Amenity(**amenity_data)
         new_amenity.save()
-        return jsonify(new_amenityity.to_dict()), 201
+        return jsonify(new_amenity.to_dict()), 201
 
 
 @amenity_views.route("/amenities/<amenity_id>", methods=["PUT"])
-def update_city(city_id):
+def update_city(amenity_id):
     """updates data on a city"""
     if request.method == "PUT":
         all_amenities = storage.get(Amenity, amenity_id)
@@ -72,6 +72,6 @@ def update_city(city_id):
         data = request.get_json()
         for key, value in data.items():
             if key not in ["id", "created_at", "updated_at"]:
-                setattr(all_cities, key, value)
+                setattr(all_amenities, key, value)
         storage.save()
-        return jsonify(all_cities.to_dict()), 200
+        return jsonify(all_amenities.to_dict()), 200
