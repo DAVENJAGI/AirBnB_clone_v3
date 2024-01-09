@@ -30,5 +30,4 @@ def no_of_objects():
             "states": storage.count(State),
             "users": storage.count(User)
             }
-    returned_data = json.dumps(data)
-    return (returned_data)
+    return jsonify(data)
